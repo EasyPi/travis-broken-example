@@ -1,53 +1,38 @@
 sudo: required
-
 language: php
-
 php:
-  - 5.5
-  - 5.4
-
+- 5.5
+- 5.4
 env:
-  - DB=mysql
-  - DB=mariadb
-  - DB=postgres
-
+- DB=mysql
+- DB=mariadb
+- DB=postgres
 matrix:
   exclude:
-    - php: 5.4
-      env: DB=mysql
-    - php: 5.5
-      env: DB=postgres
-
+  - php: 5.4
+    env: DB=mysql
+  - php: 5.5
+    env: DB=postgres
 before_install: echo "before install"
-
 install:
-  - echo "install begin"
-  - sudo apt-get install python
-  - curl https://bootstrap.pypa.io/get-pip.py | sudo python
-  - sudo pip install json2yaml
-  - echo "install end"
-
+- echo "install begin"
+- sudo apt-get install python
+- curl https://bootstrap.pypa.io/get-pip.py | sudo python
+- sudo pip install json2yaml
+- echo "install end"
 before_script: echo "before script"
-
 script:
-  - echo "script begin ($TRAVIS_PHP_VERSION $DB)"
-  - phpunit Test.php
-  - yaml2json .travis.yml
-  - echo "script end"
-
+- echo "script begin ($TRAVIS_PHP_VERSION $DB)"
+- phpunit Test.php
+- yaml2json .travis.yml
+- echo "script end"
 after_success:
-  - echo "after success begin"
-  - false
-  - echo "after success end"
-
+- echo "after success begin"
+- false
+- echo "after success end"
 after_failure: echo "after failure"
-
 after_script: echo "after script"
-
 notifications:
-  email:
-    recipients:
-      - kev@easypi.info
-      - admin@easypi.info
-    on_success: never
-    on_failure: always
+  email: false
+  slack:
+    secure: jK8S9GdgwvduMWXXlJzgAp+16MmWsdmdLqM3pCTVj4sAtJ0VxAqyyqy5sJrOgATUCIl/MEk3GEZLsFe3/xAmZHZjBxU0oWHmp891lMP8ljLRTt5xLTIuKsViLYxFJps5doYbsOFbVfbSvWaWjWIcygDijXhetlQGRrK63UNNjZvKbc35CdOYqj2Lp79tUO6ljsm2KQAXSId7jktbs6O8LzhXvFhd1Yf9Fl7rWsJ6LyG0rOgSbLD5kePKQJosQMWEMeyQER+zdfnHlJYzQLNqzTY1TGSWDMYVNPxvEEfpleLJ/U5C3q1artq5NC4OkZlBZkdHHRnVFd6q8ruDXOWRP2bzfCMkulpNUp7kiJXyN+d0QgozNxabtxIdf9n5KpN2GIJht71C6RHLG2ks3NGXEp+EeYvcq1CQ4UvcB7Y61iafo1CqE6JWAulpT2CYdFQxkKumAZjvyefAOUxmxRDTcx/CYik1nm7fJ48gmmV8s4fr69VOReBZ6pZ2NEDs5ftkSVzEQSQMU7+ReUiLCshy7LgMeAqOQgBmGRPIXZITvPlpYXdqWB4TV4h8mUfj0Vyfu8R7soz1sY/gUvClTZcl03EaT2cBmzT0BpYd60+kpZMb4u4hdMWLSIak3vu26oE6O/PN2PtE+NG7NsiltAloJg22T3qW46M1y39ePxBPZbQ=
