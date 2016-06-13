@@ -4,11 +4,21 @@ php:
   - 5.5
   - 5.4
 
+before_install: echo "before install"
+
 install:
   - echo "install begin"
   - echo "install end"
+
+before_script: echo "before script"
 
 script:
   - echo "script begin"
   - phpunit Test.php
   - echo "script end"
+
+after_success: echo "after success"
+
+after_failure: echo "after failure"
+
+after_script: echo "after script"
