@@ -8,6 +8,7 @@ before_install: echo "before install"
 
 install:
   - echo "install begin"
+  - false
   - echo "install end"
 
 before_script: echo "before script"
