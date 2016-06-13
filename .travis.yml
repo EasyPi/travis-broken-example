@@ -9,6 +9,13 @@ env:
   - DB=mariadb
   - DB=postgres
 
+matrix:
+  exclude:
+    - php: 5.4
+      env: DB=mysql
+    - php: 5.5
+      env: DB=postgres
+
 before_install: echo "before install"
 
 install:
