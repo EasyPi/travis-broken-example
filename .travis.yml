@@ -1,37 +1,58 @@
 sudo: required
+
 language: php
+
 php:
 - 5.5
 - 5.4
+
 env:
 - DB=mysql
 - DB=mariadb
 - DB=postgres
+
 matrix:
   exclude:
   - php: 5.4
     env: DB=mysql
   - php: 5.5
     env: DB=postgres
+
 before_install: echo "before install"
+
 install:
 - echo "install begin"
 - sudo apt-get install python
 - curl https://bootstrap.pypa.io/get-pip.py | sudo python
 - sudo pip install json2yaml
 - echo "install end"
+
 before_script: echo "before script"
+
 script:
 - echo "script begin ($TRAVIS_PHP_VERSION $DB)"
 - phpunit Test.php
-- yaml2json .travis.yml
+- yaml2json .travis.yml > travis-$TRAVIS_PHP_VERSION-$DB.json
 - echo "script end"
+
 after_success:
 - echo "after success begin"
 - false
 - echo "after success end"
+
 after_failure: echo "after failure"
+
+deploy:
+  provider: releases
+  api_key:
+    secure: S7Dj7+b59T1grWA3gusfLFOCxzBIz+Gx7bqExdpGX6tWJTDqx/ynKfddZnFO2WGdlNMTLf8NXbAkLk5azljnz1VRxoZ8BhXgwyVpMsnWpsWbfEMMqQ+nWd2CzTj0EFDDCeTZzAel3GSzBqRfEoM5H/RV2f44ZzLHcqNZKQrEQbsu93IqOCGLe2wUuMetKMGqvgN008adT1fvCXMjVTgsuoWU1d2S3e2K54SY3LDaxV8MSHJ6V864v8C51dinR8vT4+OpgcURXNmwMq9Ehr/fHxWCTpLgyPCS+EaYDcGUep59lIRTaVcLWprvDxHzr5OoB0O/oZssvq5ZnFtQDHhfYQaEStYhMWkco90BqWYS4wkJlZBFetAOfcPPfzcN2y+WeBlloNDgcA3wYf9QdWfqT8miuG0Ms7m6mEYoraTZl2PfnoxJgYKE6iZxHWcW8LJXNRU8bm4SQkZHdJGjpT8hOA+jJusER/L28VE+Xor+Q5aFGqA+vHswu3e2HLzLGGp8Q1M4Xrrzd4KaADcXjlUXg0Opa3TqETBFg+BJyTY6XQ4W1qCXHykfS2PJwyDZO9AgvtIlpx2h28Y0dTj2KaDTDcOdqNAWYjNt7a/i6WDBP/TpgDPYYqZxcLICTMSi15KaiQnEr5+kaAsJur7337ElSzoQmNJuSwNabNdN5zilByo=
+  file: travis-$TRAVIS_PHP_VERSION-$DB.json
+  skip_cleanup: true
+  on:
+    tags: true
+
 after_script: echo "after script"
+
 notifications:
   email: false
   slack:
