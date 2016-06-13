@@ -43,3 +43,11 @@ after_success:
 after_failure: echo "after failure"
 
 after_script: echo "after script"
+
+notifications:
+  email:
+    recipients:
+      - kev@easypi.info
+      - admin@easypi.info
+    on_success: never
+    on_failure: always
