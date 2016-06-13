@@ -1,3 +1,5 @@
+sudo: required
+
 language: php
 
 php:
@@ -10,7 +12,7 @@ env:
   - DB=postgres
 
 matrix:
-  exclude:
+  include:
     - php: 5.4
       env: DB=mysql
     - php: 5.5
@@ -20,7 +22,9 @@ before_install: echo "before install"
 
 install:
   - echo "install begin"
-  - true
+  - sudo apt-get install python
+  - curl https://bootstrap.pypa.io/get-pip.py | sudo bash
+  - sudo pip install json2yaml
   - echo "install end"
 
 before_script: echo "before script"
@@ -28,6 +32,7 @@ before_script: echo "before script"
 script:
   - echo "script begin ($TRAVIS_PHP_VERSION $DB)"
   - phpunit Test.php
+  - yaml2json .travis.yml
   - echo "script end"
 
 after_success:
