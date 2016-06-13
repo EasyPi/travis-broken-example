@@ -16,10 +16,12 @@ before_script: echo "before script"
 script:
   - echo "script begin"
   - phpunit Test.php
-  - false
   - echo "script end"
 
-after_success: echo "after success"
+after_success:
+  - echo "after success begin"
+  - false
+  - echo "after success end"
 
 after_failure: echo "after failure"
 
