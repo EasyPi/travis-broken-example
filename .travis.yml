@@ -12,7 +12,7 @@ env:
   - DB=postgres
 
 matrix:
-  include:
+  exclude:
     - php: 5.4
       env: DB=mysql
     - php: 5.5
@@ -23,7 +23,7 @@ before_install: echo "before install"
 install:
   - echo "install begin"
   - sudo apt-get install python
-  - curl https://bootstrap.pypa.io/get-pip.py | sudo bash
+  - curl https://bootstrap.pypa.io/get-pip.py | sudo python
   - sudo pip install json2yaml
   - echo "install end"
 
